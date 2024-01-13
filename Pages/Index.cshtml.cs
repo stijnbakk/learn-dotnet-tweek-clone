@@ -21,12 +21,16 @@ public class IndexModel : PageModel
     // Add Items property
 
     public Item NewItem { get; set; }
-    public List<Item> ItemList { get; set; }
+    public List<Item> MondayItems { get; set; }
+    public List<Item> TuesdayItems { get; set; }
+    public List<Item> WednesdayItems { get; set; }
 
     public void OnGet()
     {
         // Add Items property
-        ItemList = _db.Items.ToList();
+        MondayItems = _db.Items.ToList();
+        TuesdayItems = _db.Items.ToList();
+        WednesdayItems = _db.Items.ToList();
     }
 
     public IActionResult OnPost()
