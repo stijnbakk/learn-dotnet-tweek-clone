@@ -1,0 +1,20 @@
+@page
+@model ItemDetails;
+@{
+    ViewData["Title"] = "ItemDetails";
+}
+
+
+<div>
+    <form method="post" asp-page-handler="UpdateTitle">
+        <input type="hidden" name="id" value="@Model.Item.Id" />
+        <input asp-for="@Model.Item.Title" autofocus class="text-lg"/>
+    </form>
+    <form method="post" asp-page-handler="Delete">
+        <input type="hidden" name="id" value="@Model.Item.Id" />
+        <button type="submit">
+            Delete
+        </button>
+    </form>
+    
+</div>

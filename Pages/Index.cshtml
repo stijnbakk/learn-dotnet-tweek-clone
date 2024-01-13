@@ -1,0 +1,28 @@
+﻿@page 
+
+@model IndexModel
+
+@{ ViewData["Title"] = "Home page"; }
+
+<div class="p-8 w-80">
+  <h1 class='font-bold text-xl'>Monday</h1>
+  <ul>
+    @foreach (var item in Model.ItemList)
+    {
+        <li class="py-2 border-b-[1px] border-collapse border-gray-300 line-clamp-1 flex flex-row gap-3">
+            <form method="post" asp-page-handler="UpdateCompleted">
+                <input type="hidden" asp-for="@item.Id" name="ItemId" />
+                <input type="checkbox" asp-for="@item.Completed" name="Completed" onchange="this.form.submit()" />
+            </form>
+            <!-- Add link to ItemDetails -->
+            <a class="hover:text-blue-600 line-clamp-1" asp-page="ItemDetails" asp-route-id="@item.Id">@item.Title</a>
+            
+        </li>
+    }
+    </ul>
+    <!-- Create post form -->
+    <form method="post">
+        <input asp-for="NewItem.Title" autofocus class="focus:border-b-2 focus:border-black py-2 border-b-[1px] border-collapse border-gray-300 w-full outline-none"/>
+        @* <button type="submit">Create</button> *@
+    </form>
+</div>
