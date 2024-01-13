@@ -548,6 +548,10 @@ video {
   visibility: hidden;
 }
 
+.col-span-1 {
+  grid-column: span 1 / span 1;
+}
+
 .line-clamp-1 {
   overflow: hidden;
   display: -webkit-box;
@@ -579,8 +583,8 @@ video {
   border-collapse: collapse;
 }
 
-.grid-cols-6 {
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+.grid-cols-7 {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
 .flex-row {

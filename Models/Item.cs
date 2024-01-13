@@ -11,5 +11,14 @@ namespace tweekClone.Models
         [DisplayName("Item title")]
         public string Title { get; set; }
         public Boolean Completed { get; set; }
+        public DateOnly LinkedDate { get; set; }
+    }
+
+    public class DayOverview
+    {
+        public DateOnly Date { get; set; }
+        public string DayOfWeek { get; set; }
+        public List<Item> DayItems { get; set; }
+
     }
 }

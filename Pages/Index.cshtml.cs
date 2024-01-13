@@ -21,16 +21,25 @@ public class IndexModel : PageModel
     // Add Items property
 
     public Item NewItem { get; set; }
-    public List<Item> MondayItems { get; set; }
-    public List<Item> TuesdayItems { get; set; }
-    public List<Item> WednesdayItems { get; set; }
+    public List<DayOverview> DayOverviews { get; set; }
+
 
     public void OnGet()
     {
-        // Add Items property
-        MondayItems = _db.Items.ToList();
-        TuesdayItems = _db.Items.ToList();
-        WednesdayItems = _db.Items.ToList();
+        DayOverviews = new List<DayOverview>();
+
+        // Create a list of DayOverview objects, starting with the monday of this (last) week
+        var monday = DateOnly.FromDateTime(DateTime.Now).AddDays(-(int)DateTime.Now.DayOfWeek + 1);
+        for (int i = 0; i < 7; i++)
+        {
+            var dayOverview = new DayOverview
+            {
+                Date = monday.AddDays(i),
+                DayOfWeek = monday.AddDays(i).DayOfWeek.ToString(),
+                DayItems = _db.Items.Where(item => item.LinkedDate == monday.AddDays(i)).ToList()
+            };
+            DayOverviews.Add(dayOverview);
+        }
     }
 
     public IActionResult OnPost()

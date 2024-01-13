@@ -5,6 +5,7 @@
 @{ ViewData["Title"] = "Home page"; }
 
 <div class="p-8 ">
+    <h1>Home page</h1>
     @* <h1 class='font-bold text-xl'>Monday</h1> *@
     @* <ul>
         @foreach (var item in Model.ItemList)
@@ -19,22 +20,17 @@
         }
     </ul> *@
 
-    <div class="grid grid-cols-6 w-full gap-10">
-        <div>
-            <h1 class='font-bold text-xl'>Monday</h1>
-            @Html.Partial("_ItemListView", Model.MondayItems)
-            <!-- Create post form -->
+    <div class="grid grid-cols-7 w-full gap-10">
+    @foreach (var day in Model.DayOverviews)
+    {
+        <div class="col-span-1">
+            <h1 class='font-bold text-xl'>@day.DayOfWeek</h1>
+            @Html.Partial("_ItemListView", day.DayItems)
             <form method="post">
-                <input asp-for="NewItem.Title" autofocus class="focus:border-b-2 focus:border-black py-2 border-b-[1px] border-collapse border-gray-300 w-full outline-none"/>
+                <input type="hidden" asp-for="NewItem.LinkedDate" value="@day.Date" />
+                <input asp-for="NewItem.Title" class="focus:border-b-2 focus:border-black py-2 border-b-[1px] border-collapse border-gray-300 w-full outline-none"/>
             </form>
         </div>
-        <div>
-            <h1 class='font-bold text-xl'>Tuesday</h1>
-            @Html.Partial("_ItemListView", Model.TuesdayItems)
-        </div>
-
-        <div>
-            <h1 class='font-bold text-xl'>Wednesday</h1>
-            @Html.Partial("_ItemListView", Model.WednesdayItems)
-        </div>
+    }
+    </div>
 </div>
