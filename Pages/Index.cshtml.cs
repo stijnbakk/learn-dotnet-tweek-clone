@@ -22,6 +22,7 @@ public class IndexModel : PageModel
 
     public Item NewItem { get; set; }
     public List<DayOverview> DayOverviews { get; set; }
+    public DayOverview DayOverview { get; set; }
 
 
     public void OnGet()

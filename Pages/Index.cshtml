@@ -1,36 +1,40 @@
-﻿@page 
+﻿@page
 
 @model IndexModel
 
-@{ ViewData["Title"] = "Home page"; }
+@{
+    ViewData["Title"] = "Home page";
+}
 
 <div class="p-8 ">
     <h1>Home page</h1>
-    @* <h1 class='font-bold text-xl'>Monday</h1> *@
-    @* <ul>
-        @foreach (var item in Model.ItemList)
-        {
-                <li class="group py-2 border-b-[1px] border-collapse border-gray-300 line-clamp-1 flex flex-row gap-3 @((item.Completed) ? "completed" : "uncompleted")">
-                        <a class="hover:text-blue-600 line-clamp-1 flex-grow" asp-page="ItemDetails" asp-route-id="@item.Id">@item.Title</a>
-                        <form method="post" asp-page-handler="UpdateCompleted" class="invisible group-hover:visible">
-                                <input type="hidden" asp-for="@item.Id" name="ItemId" />
-                                <input type="checkbox" asp-for="@item.Completed" name="Completed" onchange="this.form.submit()" class="rounded-full" />
-                        </form>
-                </li>
-        }
-    </ul> *@
 
     <div class="grid grid-cols-7 w-full gap-10">
-    @foreach (var day in Model.DayOverviews)
-    {
-        <div class="col-span-1">
-            <h1 class='font-bold text-xl'>@day.DayOfWeek</h1>
-            @Html.Partial("_ItemListView", day.DayItems)
-            <form method="post">
-                <input type="hidden" asp-for="NewItem.LinkedDate" value="@day.Date" />
-                <input asp-for="NewItem.Title" class="focus:border-b-2 focus:border-black py-2 border-b-[1px] border-collapse border-gray-300 w-full outline-none"/>
-            </form>
-        </div>
-    }
+        @foreach (var day in Model.DayOverviews)
+        {
+            <div class="col-span-1">
+                <h1 class='font-bold text-xl'>@day.DayOfWeek</h1>
+                <ul>
+                    @foreach (var item in @day.DayItems)
+                    {
+                        <li
+                            class="group py-2 border-b-[1px] border-collapse border-gray-300 line-clamp-1 flex flex-row gap-3 @((item.Completed) ? "completed" : "uncompleted")">
+                            <a class="hover:text-blue-600 line-clamp-1 flex-grow" asp-page="ItemDetails"
+                                asp-route-id="@item.Id">@item.Title</a>
+                            <form method="post" asp-page-handler="UpdateCompleted" class="invisible group-hover:visible">
+                                <input type="hidden" asp-for="@item.Id" name="ItemId" />
+                                <input type="checkbox" asp-for="@item.Completed" name="Completed" onchange="this.form.submit()"
+                                    class="rounded-full" />
+                            </form>
+                        </li>
+                    }
+                </ul>
+                <form method="post">
+                    <input type="hidden" asp-for="@Model.NewItem.LinkedDate" value="@day.Date" autofocus />
+                    <input asp-for="NewItem.Title"
+                        class="focus:border-b-2 focus:border-black py-2 border-b-[1px] border-collapse border-gray-300 w-full outline-none" />
+                </form>
+            </div>
+        }
     </div>
 </div>
