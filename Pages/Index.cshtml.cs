@@ -22,24 +22,28 @@ public class IndexModel : PageModel
 
     public Item NewItem { get; set; }
     public List<DayOverview> DayOverviews { get; set; }
-    public DayOverview DayOverview { get; set; }
+    public WeekOverview WeekOverview { get; set; }
 
 
     public void OnGet()
     {
-        DayOverviews = new List<DayOverview>();
+        // Initiate a WeekOverview object
+        WeekOverview = new WeekOverview
+        {
+            StartDate = DateOnly.FromDateTime(DateTime.Now).AddDays(-(int)DateTime.Now.DayOfWeek + 1),
+            WeekDays = new List<DayOverview>()
+        };
 
-        // Create a list of DayOverview objects, starting with the monday of this (last) week
-        var monday = DateOnly.FromDateTime(DateTime.Now).AddDays(-(int)DateTime.Now.DayOfWeek + 1);
+        // Populate weekOverview with an series of DayOverview objects
         for (int i = 0; i < 7; i++)
         {
             var dayOverview = new DayOverview
             {
-                Date = monday.AddDays(i),
-                DayOfWeek = monday.AddDays(i).DayOfWeek.ToString(),
-                DayItems = _db.Items.Where(item => item.LinkedDate == monday.AddDays(i)).ToList()
+                Date = WeekOverview.StartDate.AddDays(i),
+                WeekdayName = WeekOverview.StartDate.AddDays(i).DayOfWeek.ToString(),
+                DayItems = _db.Items.Where(item => item.LinkedDate == WeekOverview.StartDate.AddDays(i)).ToList()
             };
-            DayOverviews.Add(dayOverview);
+            WeekOverview.WeekDays.Add(dayOverview);
         }
     }
 
@@ -58,16 +62,5 @@ public class IndexModel : PageModel
         item.Completed = !item.Completed;
         _db.SaveChanges();
         return RedirectToPage();
-    }
-
-    // Add page handler that returns a single item as html when requesting an item by id
-    public IActionResult OnGetItem(int itemId)
-    {
-        var item = _db.Items.Find(itemId);
-        return new ContentResult
-        {
-            ContentType = "text/html",
-            Content = $"<h2>{item.Title}</h2>"
-        };
     }
 }

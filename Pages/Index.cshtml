@@ -7,13 +7,14 @@
 }
 
 <div class="p-8 ">
-    <h1>Home page</h1>
+    <h1 class="font-bold text-5xl">January (TBD)</h1>
+    <p>Week 01 (TBD)</p>
 
     <div class="grid grid-cols-7 w-full gap-10">
-        @foreach (var day in Model.DayOverviews)
+        @foreach (var day in Model.WeekOverview.WeekDays)
         {
             <div class="col-span-1">
-                <h1 class='font-bold text-xl'>@day.DayOfWeek</h1>
+                <h1 class='font-bold text-xl'>@day.WeekdayName</h1>
                 <ul>
                     @foreach (var item in @day.DayItems)
                     {
