@@ -50,11 +50,11 @@
     <a class="bg-gray-600 p-2 rounded text-white text-xs" href='/?startDate=@Model.WeekOverview.StartDate.AddDays(7).ToString("yyyy-MM-dd")'>Next week &#62;</a>
     </div>
   </div>
-    <div class="w-full weekGridContainer flex-grow h-full grid gap-5">
+    <div class="w-full weekGridContainer flex-grow h-full lg:grid gap-5 ">
       
         @foreach (var day in Model.WeekOverview.WeekDays)
         {
-            <div class="col-span-1 @(day.WeekdayName.ToLower())" >
+            <div class="col-span-1 @(day.WeekdayName.ToLower()) mb-10 lg:mb-0" >
                 <h1 class='font-bold text-xl @(day.Date == DateOnly.FromDateTime(DateTime.Today) ? "text-blue-500" : "")'>
                     @day.WeekdayName</h1>
                     @await Html.PartialAsync("/Pages/Components/WeekView/List.cshtml", day.DayItems)

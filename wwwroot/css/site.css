@@ -14,14 +14,14 @@
   @apply text-blue-500;
 }
 
-
-.weekGridContainer {
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  grid-template-areas:
-    "monday tuesday wednesday thursday friday saturday"
-    "monday tuesday wednesday thursday friday sunday"
-    "other other other other other other";
+@media (min-width: 1024px) {
+  .weekGridContainer {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas:
+      "monday tuesday wednesday thursday friday saturday sunday"
+      "other other other other other other other";
+  }
 }
 
 .monday{

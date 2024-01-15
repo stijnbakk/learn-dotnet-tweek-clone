@@ -552,6 +552,10 @@ video {
   grid-column: span 1 / span 1;
 }
 
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
+
 .line-clamp-1 {
   overflow: hidden;
   display: -webkit-box;
@@ -561,10 +565,6 @@ video {
 
 .flex {
   display: flex;
-}
-
-.grid {
-  display: grid;
 }
 
 .hidden {
@@ -717,13 +717,14 @@ video {
   color: rgb(59 130 246 / var(--tw-text-opacity));
 }
 
-.weekGridContainer {
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  grid-template-areas:
-    "monday tuesday wednesday thursday friday saturday"
-    "monday tuesday wednesday thursday friday sunday"
-    "other other other other other other";
+@media (min-width: 1024px) {
+  .weekGridContainer {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas:
+      "monday tuesday wednesday thursday friday saturday sunday"
+      "other other other other other other other";
+  }
 }
 
 .monday{
@@ -774,4 +775,14 @@ video {
 
 .group:hover .group-hover\:visible {
   visibility: visible;
+}
+
+@media (min-width: 1024px) {
+  .lg\:mb-0 {
+    margin-bottom: 0px;
+  }
+
+  .lg\:grid {
+    display: grid;
+  }
 }
