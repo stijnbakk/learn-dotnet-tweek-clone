@@ -9,3 +9,7 @@
     @apply line-through opacity-50;
   }
 }
+
+.activate {
+  @apply text-blue-500;
+}

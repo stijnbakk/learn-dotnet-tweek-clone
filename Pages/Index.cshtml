@@ -8,7 +8,7 @@
 
 <div class="p-8 ">
     <h1 class="font-bold text-5xl">@Model.WeekOverview.MonthName</h1>
-    <p>Week @Model.WeekOverview.WeekNumber</p>
+    <p class='@((Model.WeekOverview.IsThisWeek) ? "text-blue-500" : "")'>Week @Model.WeekOverview.WeekNumber</p>
 
     <a href='/?startDate=@Model.WeekOverview.StartDate.AddDays(-7).ToString("yyyy-MM-dd")'>Last week</a>
     <a href='/?startDate=@Model.WeekOverview.StartDate.AddDays(7).ToString("yyyy-MM-dd")'>Next week</a>
@@ -17,7 +17,8 @@
         @foreach (var day in Model.WeekOverview.WeekDays)
         {
             <div class="col-span-1">
-                <h1 class='font-bold text-xl'>@day.WeekdayName</h1>
+                <h1 class='font-bold text-xl @(day.Date == DateOnly.FromDateTime(DateTime.Today) ? "text-blue-500" : "")'>
+                    @day.WeekdayName</h1>
                 <ul>
                     @foreach (var item in @day.DayItems)
                     {

@@ -18,6 +18,7 @@ namespace tweekClone.Models
         public DateOnly StartDate { get; set; }
         public string MonthName => StartDate.ToString("MMMM");
         public int WeekNumber => GetWeekNumber(StartDate);
+        public bool IsThisWeek => WeekNumber == GetWeekNumber(DateOnly.FromDateTime(DateTime.Now));
 
         private int GetWeekNumber(DateOnly date)
         {
