@@ -13,3 +13,38 @@
 .activate {
   @apply text-blue-500;
 }
+
+
+.weekGridContainer {
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas:
+    "monday tuesday wednesday thursday friday saturday"
+    "monday tuesday wednesday thursday friday sunday"
+    "other other other other other other";
+}
+
+.monday{
+  grid-area: monday;
+}
+.tuesday{
+  grid-area: tuesday;
+}
+.wednesday{
+  grid-area: wednesday;
+}
+.thursday{
+  grid-area: thursday;
+}
+.friday{
+  grid-area: friday;
+}
+.saturday{
+  grid-area: saturday;
+}
+.sunday{
+  grid-area: sunday;
+}
+.other{
+  grid-area: other;
+}

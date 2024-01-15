@@ -39,17 +39,22 @@
 })
 </script>
 
-<div class="p-8 ">
-    <h1 class="font-bold text-5xl">@Model.WeekOverview.MonthName</h1>
-    <p class='@((Model.WeekOverview.IsThisWeek) ? "text-blue-500" : "")'>Week @Model.WeekOverview.WeekNumber</p>
-
-    <a href='/?startDate=@Model.WeekOverview.StartDate.AddDays(-7).ToString("yyyy-MM-dd")'>Last week</a>
-    <a href='/?startDate=@Model.WeekOverview.StartDate.AddDays(7).ToString("yyyy-MM-dd")'>Next week</a>
-
-    <div class="grid grid-cols-7 w-full gap-10">
+<div class="p-8 min-h-screen flex flex-col gap-8">
+  <div class="weekViewDetails flex flex-row items-center">
+    <div class="flex flex-col gap-2 flex-grow">
+      <h1 class="font-bold text-5xl">@Model.WeekOverview.MonthName</h1>
+      <p class='@((Model.WeekOverview.IsThisWeek) ? "text-blue-500" : "")'>Week @Model.WeekOverview.WeekNumber</p>
+    </div>
+    <div class="flex-grow-0 flex flex-row gap-2">
+    <a class="bg-gray-600 p-2 rounded text-white text-xs" href='/?startDate=@Model.WeekOverview.StartDate.AddDays(-7).ToString("yyyy-MM-dd")'>&#60;Last week</a>
+    <a class="bg-gray-600 p-2 rounded text-white text-xs" href='/?startDate=@Model.WeekOverview.StartDate.AddDays(7).ToString("yyyy-MM-dd")'>Next week &#62;</a>
+    </div>
+  </div>
+    <div class="w-full weekGridContainer flex-grow h-full grid gap-5">
+      
         @foreach (var day in Model.WeekOverview.WeekDays)
         {
-            <div class="col-span-1" >
+            <div class="col-span-1 @(day.WeekdayName.ToLower())" >
                 <h1 class='font-bold text-xl @(day.Date == DateOnly.FromDateTime(DateTime.Today) ? "text-blue-500" : "")'>
                     @day.WeekdayName</h1>
                     @await Html.PartialAsync("/Pages/Components/WeekView/List.cshtml", day.DayItems)
@@ -60,5 +65,9 @@
                 </form>
             </div>
         }
+
     </div>
+    
+    
+    
 </div>
