@@ -12,5 +12,6 @@ namespace tweekClone.Models
         public string Title { get; set; }
         public Boolean Completed { get; set; }
         public DateOnly LinkedDate { get; set; }
+        public int? DaySortOrder { get; set; }
     }
 }
