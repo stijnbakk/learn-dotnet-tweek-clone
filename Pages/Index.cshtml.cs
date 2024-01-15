@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using tweekClone.Data;
 using tweekClone.Models;
 
@@ -41,7 +42,10 @@ public class IndexModel : PageModel
             {
                 Date = WeekOverview.StartDate.AddDays(i),
                 WeekdayName = WeekOverview.StartDate.AddDays(i).DayOfWeek.ToString(),
-                DayItems = _db.Items.Where(item => item.LinkedDate == WeekOverview.StartDate.AddDays(i)).ToList()
+                DayItems = _db.Items
+                    .Where(item => item.LinkedDate == WeekOverview.StartDate.AddDays(i))
+                    .OrderBy(item => item.DaySortOrder) // Sort by DaySortOrder
+                    .ToList()
             };
             WeekOverview.WeekDays.Add(dayOverview);
         }
@@ -78,5 +82,23 @@ public class IndexModel : PageModel
         // return partial _ItemListView with the updated item
         return Partial("_ItemListView", item);
 
+    }
+    public async Task<IActionResult> OnPostSortItems()
+    {
+        try
+        {
+            var itemIds = Request.Form["itemId"].ToList();
+            for (int i = 0; i < itemIds.Count; i++)
+            {
+                var item = _db.Items.Find(int.Parse(itemIds[i]));
+                item.DaySortOrder = i;
+            }
+            await _db.SaveChangesAsync();
+            return RedirectToPage();
+        }
+        catch (System.Exception)
+        {
+            return Page();
+        }
     }
 }
