@@ -31,9 +31,7 @@
 
       // Re-enable sorting on the `htmx:afterSwap` event
       sortable.addEventListener("htmx:afterSwap", function() {
-        console.log("after swap")
         sortableInstance.option("disabled", false);
-        console.log(sortableInstance)
       });
     }
 })

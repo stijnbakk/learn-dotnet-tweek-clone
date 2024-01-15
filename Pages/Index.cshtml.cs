@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using tweekClone.Data;
 using tweekClone.Models;
 
@@ -64,7 +65,9 @@ public class IndexModel : PageModel
 
     public IActionResult OnPost()
     {
-        // Add Items property
+        // TODO: make robust with a check on validity of NewItem
+        // TODO: make HTMX compliant by adding new item to end of the list
+        NewItem.DaySortOrder = _db.Items.Where(item => item.LinkedDate == NewItem.LinkedDate).Count();
         _db.Items.Add(NewItem);
         _db.SaveChanges();
         return RedirectToPage();
