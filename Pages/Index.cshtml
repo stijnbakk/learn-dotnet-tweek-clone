@@ -10,6 +10,9 @@
     <h1 class="font-bold text-5xl">@Model.WeekOverview.MonthName</h1>
     <p>Week @Model.WeekOverview.WeekNumber</p>
 
+    <a href='/?startDate=@Model.WeekOverview.StartDate.AddDays(-7).ToString("yyyy-MM-dd")'>Last week</a>
+    <a href='/?startDate=@Model.WeekOverview.StartDate.AddDays(7).ToString("yyyy-MM-dd")'>Next week</a>
+
     <div class="grid grid-cols-7 w-full gap-10">
         @foreach (var day in Model.WeekOverview.WeekDays)
         {

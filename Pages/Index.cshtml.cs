@@ -25,16 +25,16 @@ public class IndexModel : PageModel
     public WeekOverview WeekOverview { get; set; }
 
 
-    public void OnGet()
+    public void OnGet(string startDate)
     {
         // Initiate a WeekOverview object
         WeekOverview = new WeekOverview
         {
-            StartDate = DateOnly.FromDateTime(DateTime.Now).AddDays(-(int)DateTime.Now.DayOfWeek + 1),
+            StartDate = GetStartDate(startDate),
             WeekDays = new List<DayOverview>()
         };
 
-        // Populate weekOverview with an series of DayOverview objects
+        // Populate weekOverview with a series of DayOverview objects
         for (int i = 0; i < 7; i++)
         {
             var dayOverview = new DayOverview
@@ -44,6 +44,18 @@ public class IndexModel : PageModel
                 DayItems = _db.Items.Where(item => item.LinkedDate == WeekOverview.StartDate.AddDays(i)).ToList()
             };
             WeekOverview.WeekDays.Add(dayOverview);
+        }
+    }
+
+    private DateOnly GetStartDate(string startDate)
+    {
+        if (!string.IsNullOrEmpty(startDate) && DateOnly.TryParse(startDate, out DateOnly parsedDate))
+        {
+            return parsedDate;
+        }
+        else
+        {
+            return DateOnly.FromDateTime(DateTime.Now).AddDays(-(int)DateTime.Now.DayOfWeek + 1);
         }
     }
 
