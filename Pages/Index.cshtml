@@ -7,8 +7,8 @@
 }
 
 <div class="p-8 ">
-    <h1 class="font-bold text-5xl">January (TBD)</h1>
-    <p>Week 01 (TBD)</p>
+    <h1 class="font-bold text-5xl">@Model.WeekOverview.MonthName</h1>
+    <p>Week @Model.WeekOverview.WeekNumber</p>
 
     <div class="grid grid-cols-7 w-full gap-10">
         @foreach (var day in Model.WeekOverview.WeekDays)
