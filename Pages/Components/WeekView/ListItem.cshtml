@@ -1,11 +1,12 @@
 <!-- Insert Item model -->
 @model tweekClone.Models.Item;
 
-<li draggable="true"
+<li 
     class="group py-2 border-b-[1px] border-collapse border-gray-300 line-clamp-1 flex flex-row gap-3 @((@Model.Completed) ? "completed" : "uncompleted")">
-    <a class="hover:text-blue-600 line-clamp-1 flex-grow" asp-page="ItemDetails"
-        asp-route-id="@Model.Id">@Model.Title</a>
+    @* <a class="hover:text-blue-600 line-clamp-1 flex-grow" asp-page="ItemDetails"
+        asp-route-id="@Model.Id">@Model.Title</a> *@
 
+    <span>@Model.Title</span>
 
     <input type="hidden" asp-for="@Model.Id" name="ItemId" />
     <input class="invisible group-hover:visible" hx-swap=" outerHTML" hx-target="closest li"

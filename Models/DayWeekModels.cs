@@ -9,12 +9,13 @@ namespace tweekClone.Models
     public class DayOverview
     {
         public DateOnly Date { get; set; }
-        public string WeekdayName { get; set; }
-        public List<Item> DayItems { get; set; }
+        public string WeekdayName => Date.DayOfWeek.ToString();
+
+        public List<Item>? DayItems { get; set; }
     }
     public class WeekOverview
     {
-        public List<DayOverview> WeekDays { get; set; }
+        public List<DayOverview>? WeekDays { get; set; }
         public DateOnly StartDate { get; set; }
         public string MonthName => StartDate.ToString("MMMM");
         public int WeekNumber => GetWeekNumber(StartDate);

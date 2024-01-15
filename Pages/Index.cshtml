@@ -21,15 +21,19 @@
             return evt.related.className.indexOf('htmx-indicator') === -1;
           },
 
-          // Disable sorting on the `end` event
+        // TODO: fix bug where sorting after the first time is impossible
+          @* // Disable sorting on the `end` event
           onEnd: function (evt) {
+            console.log("temporary halting sorting")
             this.option("disabled", true);
-          }
+          } *@
       });
 
       // Re-enable sorting on the `htmx:afterSwap` event
       sortable.addEventListener("htmx:afterSwap", function() {
+        console.log("after swap")
         sortableInstance.option("disabled", false);
+        console.log(sortableInstance)
       });
     }
 })
@@ -48,13 +52,7 @@
             <div class="col-span-1" >
                 <h1 class='font-bold text-xl @(day.Date == DateOnly.FromDateTime(DateTime.Today) ? "text-blue-500" : "")'>
                     @day.WeekdayName</h1>
-                <ul class="sortable" hx-swap="none" hx-post="/?handler=SortItems" hx-trigger="end" hx-include="closest ul">
-                    @foreach (var item in @day.DayItems)
-                    {
-                        <!-- Insert parialview ItemListView.cshtml --> 
-                        @await Html.PartialAsync("_ItemListView", item)
-                    }
-                </ul>
+                    @await Html.PartialAsync("/Pages/Components/WeekView/List.cshtml", day.DayItems)
                 <form method="post">
                     <input type="hidden" asp-for="@Model.NewItem.LinkedDate" value="@day.Date" autofocus />
                     <input asp-for="NewItem.Title"

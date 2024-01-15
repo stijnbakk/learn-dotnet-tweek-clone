@@ -41,7 +41,6 @@ public class IndexModel : PageModel
             var dayOverview = new DayOverview
             {
                 Date = WeekOverview.StartDate.AddDays(i),
-                WeekdayName = WeekOverview.StartDate.AddDays(i).DayOfWeek.ToString(),
                 DayItems = _db.Items
                     .Where(item => item.LinkedDate == WeekOverview.StartDate.AddDays(i))
                     .OrderBy(item => item.DaySortOrder) // Sort by DaySortOrder
@@ -80,7 +79,7 @@ public class IndexModel : PageModel
         // return RedirectToPage();
 
         // return partial _ItemListView with the updated item
-        return Partial("_ItemListView", item);
+        return Partial("/Pages/Components/WeekView/ListItem.cshtml", item);
 
     }
     public async Task<IActionResult> OnPostSortItems()
@@ -94,7 +93,15 @@ public class IndexModel : PageModel
                 item.DaySortOrder = i;
             }
             await _db.SaveChangesAsync();
-            return RedirectToPage();
+
+            // find the date of the first item
+            var firstItem = _db.Items.Find(int.Parse(itemIds[0]));
+            var date = firstItem.LinkedDate;
+            // query all items for that date
+            var items = _db.Items.Where(item => item.LinkedDate == date).OrderBy(item => item.DaySortOrder).ToList();
+            // return partialview components/weekview/list with the items
+            return Partial("/Pages/Components/WeekView/List.cshtml", items);
+            // return RedirectToPage();
         }
         catch (System.Exception)
         {
