@@ -73,6 +73,10 @@ public class IndexModel : PageModel
         var item = _db.Items.Find(itemId);
         item.Completed = !item.Completed;
         _db.SaveChanges();
-        return RedirectToPage();
+        // return RedirectToPage();
+
+        // return partial _ItemListView with the updated item
+        return Partial("_ItemListView", item);
+
     }
 }

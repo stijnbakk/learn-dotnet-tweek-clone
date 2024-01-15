@@ -22,16 +22,8 @@
                 <ul>
                     @foreach (var item in @day.DayItems)
                     {
-                        <li
-                            class="group py-2 border-b-[1px] border-collapse border-gray-300 line-clamp-1 flex flex-row gap-3 @((item.Completed) ? "completed" : "uncompleted")">
-                            <a class="hover:text-blue-600 line-clamp-1 flex-grow" asp-page="ItemDetails"
-                                asp-route-id="@item.Id">@item.Title</a>
-                            <form method="post" asp-page-handler="UpdateCompleted" class="invisible group-hover:visible">
-                                <input type="hidden" asp-for="@item.Id" name="ItemId" />
-                                <input type="checkbox" asp-for="@item.Completed" name="Completed" onchange="this.form.submit()"
-                                    class="rounded-full" />
-                            </form>
-                        </li>
+                        <!-- Insert parialview ItemListView.cshtml --> 
+                        @await Html.PartialAsync("_ItemListView", item)
                     }
                 </ul>
                 <form method="post">
